@@ -4,6 +4,7 @@ from DataLayer.Models.Grammar import Grammar
 from Grammar.CheckGrammar import CheckGrammar
 from DataLayer.DataAccessObject.IDAO.MYSQL.MYSQL_WrongWordDAO import MYSQL_WrongWordDAO
 from DataLayer.Models.WrongWord import WrongWord
+from Transactions.Transactions import Transactions
 
 
 class CheckGrammarResource(Resource):
@@ -16,13 +17,21 @@ class CheckGrammarResource(Resource):
                 '_required': True,
                 '_help': 'Paragraph cannot be blank!'
             },
+            {
+                'key': 'userId',
+                '_type': int,
+                '_required': True,
+                '_help': 'userId cannot be blank!'
+            }
         ])
 
         matches = CheckGrammar().checkGrammar(data['paragraph'])
         if (matches):
             wrongWordDAO = MYSQL_WrongWordDAO()
+            transaction = Transactions()
             for match in matches:
-                wrongWordDAO.create(WrongWord(None, match['wrongWord'], 1, None))
+                wWord = wrongWordDAO.create(WrongWord(None, match['wrongWord'], 1, None))
+                transaction.saveWrongWordOfUser(data['userId'], wWord.id)
             return {'data': matches}
 
         return {'data': matches}

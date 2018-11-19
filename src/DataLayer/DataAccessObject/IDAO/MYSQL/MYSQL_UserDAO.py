@@ -1,6 +1,7 @@
 from DataLayer.DataAccessObject.Dependencies.DAO import DAO
 from DataLayer.Models.User import User
 from DataLayer.DataBase.DBManager import DBManager
+from Transactions.Transactions import Transactions
 
 class MYSQL_UserDAO(DAO):
 
@@ -12,9 +13,10 @@ class MYSQL_UserDAO(DAO):
             query = 'INSERT INTO User VALUES (%s, %s, %s, %s, %s)'
             response = cursor.execute(query, (None, user.firstName, user.lastName, user.age, user.email))
             if response:
+                user.id = conn.connection.insert_id()
                 conn.connection.commit()
                 return user
-
+        
         return None
 
     def delete(self, _id):
@@ -64,6 +66,7 @@ class MYSQL_UserDAO(DAO):
             query = 'UPDATE User SET name = %s, lastName = %s, age= %s, email = %s WHERE id = %s'
             response = cursor.execute(query,
                                       (user.firstName, user.lastName, user.age, user.email, user.id,))
+                                      
             if response:
                 conn.connection.commit()
                 return user

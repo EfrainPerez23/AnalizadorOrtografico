@@ -19,7 +19,9 @@ class UserResource(Resource):
                 if user:
                     message = 'User exists'
                     status = 200
+                    transaction = Transactions()
                     data = user.json()
+                    data = transaction.findUserErrors(data)
             else:
                 message = 'Not allowed'
                 status = 405
@@ -31,6 +33,9 @@ class UserResource(Resource):
             if len(users) > 0:
                 message = 'Users exist'
                 status = 200
+                transaction =  Transactions()
+                for _data in data:
+                    _data = transaction.findUserErrors(_data)
         return {
                    'message': message,
                    'data': data
@@ -80,11 +85,12 @@ class UserResource(Resource):
             return {'message': message, 'data': newUser.json() }, status
 
         userDAO = MYSQL_UserDAO()
-        if userDAO.create(newUser):
+        userCreated = userDAO.create(newUser)
+        if userCreated:
             message = 'User created'
             status = 201
 
-        return {'message': message, 'data': data}, status
+        return {'message': message, 'data': userCreated.json()}, status
 
     def put(self, id=None):
         _help = 'This field cannot be blank!'

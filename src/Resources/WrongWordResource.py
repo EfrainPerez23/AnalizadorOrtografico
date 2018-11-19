@@ -62,7 +62,7 @@ class WrongWordResource(Resource):
             message = 'WrongWord created'
             status = 201
 
-        return {'message': message, 'data': data}, status
+        return {'message': message, 'data': wWord.json()}, status
 
 
     def put(self, id=None):

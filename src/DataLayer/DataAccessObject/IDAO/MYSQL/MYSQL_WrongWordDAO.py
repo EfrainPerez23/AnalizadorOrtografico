@@ -12,6 +12,7 @@ class MYSQL_WrongWordDAO(DAO):
             response = cursor.execute(
                 query, (None, wrongWord.label, wrongWord.quantity))
             if response:
+                wrongWord.id = conn.connection.insert_id()
                 conn.connection.commit()
                 return wrongWord
 
