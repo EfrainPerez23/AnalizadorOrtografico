@@ -11,7 +11,7 @@ class MYSQL_WrongWord(DAO):
     def read(self, _id):
         pass
 
-    def readALL(self):
+    def readAll(self):
         pass
 
     def update(self, obj):

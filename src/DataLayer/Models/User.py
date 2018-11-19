@@ -12,6 +12,7 @@ class User(DTO):
     
     def json(self):
         return {
+            'id': self.id,
             'firstName': self.firstName,
             'lastName': self.lastName,
             'email': self.email,

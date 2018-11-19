@@ -6,7 +6,7 @@ class DAO:
         pass
 
 
-    def readALL(self):
+    def readAll(self):
         pass
 
 
