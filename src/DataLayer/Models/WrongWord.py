@@ -10,6 +10,7 @@ class WrongWord(DTO):
     
     def json(self):
         return {
+            'id': self.id,
             'label': self.label,
             'quantity': self.quantity,
             'users': self.users
@@ -17,6 +18,6 @@ class WrongWord(DTO):
     
 
     def isValid(self):
-        if self.id and self.label and self.quantity:
+        if self.label and self.quantity:
             return True
         return False

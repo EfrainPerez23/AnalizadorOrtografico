@@ -44,7 +44,6 @@ class MYSQL_UserDAO(DAO):
         return user
 
     def readAll(self):
-        user = None
         conn = DBManager()
         cursor = conn.connection.cursor()
         query = 'SELECT id, name, lastName, email, age FROM User'
@@ -56,7 +55,7 @@ class MYSQL_UserDAO(DAO):
                 for user in users
             ]
             
-        return user
+        return None
 
     def update(self, user):
         if user and user.isValid():
