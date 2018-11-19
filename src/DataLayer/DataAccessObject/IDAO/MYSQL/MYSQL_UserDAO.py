@@ -55,7 +55,7 @@ class MYSQL_UserDAO(DAO):
                 for user in users
             ]
             
-        return None
+        return []
 
     def update(self, user):
         if user and user.isValid():

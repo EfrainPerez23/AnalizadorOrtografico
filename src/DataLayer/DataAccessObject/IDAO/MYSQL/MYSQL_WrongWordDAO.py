@@ -30,17 +30,18 @@ class MYSQL_WrongWordDAO(DAO):
         return deleted
 
     def read(self, _id):
+        wWord = None
         if _id:
             conn = DBManager()
             cursor = conn.connection.cursor()
             query = 'SELECT id, label, quantity FROM WrongWord WHERE id = %s'
             cursor.execute(query, (_id,))
             firstWrongWord = cursor.fetchone()
-            if firstUser:
-                user = User(
-                    firstWrongWOrd['id'], firstWrongWOrd['label'], firstWrongWOrd['quantity'], None)
+            if firstWrongWord:
+                wWord = WrongWord(
+                    firstWrongWord['id'], firstWrongWord['label'], firstWrongWord['quantity'], None)
 
-        return None
+        return wWord
 
     def readAll(self):
         conn = DBManager()
@@ -48,23 +49,24 @@ class MYSQL_WrongWordDAO(DAO):
         query = 'SELECT id, label, quantity FROM WrongWord'
         cursor.execute(query)
         WrongWords = cursor.fetchall()
-        if users:
+        if WrongWords:
             return [
-                WrongWord(user['id'], user['label'],
-                          user['quantity'], None).json()
+                WrongWord(wrongWord['id'],wrongWord['label'],
+                          wrongWord['quantity'], None).json()
                 for wrongWord in WrongWords
             ]
 
-        return None
+        return []
 
     def update(self, wrongWord):
-        if wrongWord and user.isValid():
+        if wrongWord and wrongWord.isValid():
             conn = DBManager()
             cursor = conn.connection.cursor()
             query = 'UPDATE WrongWord SET label = %s, quantity = %s WHERE id = %s'
             response = cursor.execute(
-                query, (wrongWord.label, wrongWord.quantity, wrongWord.id))
+                query, (wrongWord.label, wrongWord.quantity, wrongWord.id,))
+            print(response)
             if response:
                 conn.connection.commit()
-                return user
+                return wrongWord
         return None

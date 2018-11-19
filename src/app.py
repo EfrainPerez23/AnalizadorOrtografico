@@ -21,7 +21,8 @@ if __name__ == '__main__':
     # Resources
     from Resources.CheckGrammarResource import CheckGrammarResource
     from Resources.UserResource import UserResource
+    from Resources.WrongWordResource import WrongWordResource
     api.add_resource(CheckGrammarResource, '/check-grammar')
     api.add_resource(UserResource, '/user', '/user/<id>', endpoint='user')
-    api.add_resource(UserResource, '/wrong-word', '/wrong-word/<id>', endpoint='wrong-word')
+    api.add_resource(WrongWordResource, '/wrong-word', '/wrong-word/<id>', endpoint='wrong-word')
     app.run()
